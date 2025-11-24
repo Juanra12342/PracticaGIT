@@ -23,10 +23,12 @@ namespace EjercicioTelegrama
             char tipoTelegrama = ' ';
             int numPalabras = 0;
             double coste;
-            //Leo el telegrama
+
+            // Leo el telegrama
             textoTelegrama = txtTelegrama.Text;
-            // telegrama urgente?
-            if (chkUrgente.Checked)
+
+            // Tipo de telegrama según radiobutton seleccionado
+            if (rbUrgente.Checked)
             {
                 tipoTelegrama = 'u';
             }
@@ -34,10 +36,13 @@ namespace EjercicioTelegrama
             {
                 tipoTelegrama = 'o';
             }
-            //Obtengo el número de palabras que forma el telegrama
-            string[] palabras = textoTelegrama.Split(' ');
+
+            // Obtengo el número de palabras del telegrama
+            string[] palabras = textoTelegrama.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
             numPalabras = palabras.Length;
-            //Si el telegrama es ordinario
+
+            // Si el telegrama es ordinario
             if (tipoTelegrama == 'o')
             {
                 if (numPalabras <= 10)
@@ -49,25 +54,18 @@ namespace EjercicioTelegrama
                     coste = 2.5 + 0.5 * (numPalabras - 10);
                 }
             }
-            else
-            //Si el telegrama es urgente
+            else // urgente
             {
-                if (tipoTelegrama == 'u')
+                if (numPalabras <= 10)
                 {
-                    if (numPalabras <= 10)
-                    {
-                        coste = 5;
-                    }
-                    else
-                    {
-                        coste = 5 + 0.75 * (numPalabras - 10);
-                    }
+                    coste = 5;
                 }
                 else
                 {
-                    coste = 0;
+                    coste = 5 + 0.75 * (numPalabras - 10);
                 }
             }
+
             txtPrecio.Text = coste.ToString("0.00") + " euros";
         }
     }
